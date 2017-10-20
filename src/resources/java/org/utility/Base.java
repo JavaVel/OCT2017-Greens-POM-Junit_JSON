@@ -64,6 +64,13 @@ public class Base {
 		return isFound;
 	}
 
+	public static void btnClick(WebElement element) {
+		if (elementFound(element)) {
+			element.click();
+		}
+
+	}
+
 	public static JSONObject readValuesFromJSON() {
 		JSONParser jsonParse = new JSONParser();
 		JSONObject jsonObject = null;

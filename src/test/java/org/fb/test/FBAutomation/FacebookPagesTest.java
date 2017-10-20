@@ -24,6 +24,7 @@ public class FacebookPagesTest extends Base {
 		FacebookPages pages = new FacebookPages();
 		setText(pages.getTxtUserName(), "Ramesh@gmail.com");
 		setText(pages.getTxtPassword(), "Ramu876");
+		btnClick(pages.getBtnLogin());
 
 	}
 
