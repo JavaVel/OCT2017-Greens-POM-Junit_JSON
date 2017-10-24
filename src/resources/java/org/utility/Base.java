@@ -13,6 +13,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.support.ui.Select;
 
 public class Base {
 	static File jsonPath = new File("./JSON/Configuration.json");
@@ -23,16 +24,13 @@ public class Base {
 		JSONObject jsonObjet = readValuesFromJSON();
 		String browserName = (String) jsonObjet.get("browser");
 		if (browserName.equals("chrome")) {
-			System.setProperty("webdriver.chrome.driver",
-					driverPath.getAbsoluteFile() + "/chromedriver.exe");
+			System.setProperty("webdriver.chrome.driver", driverPath.getAbsoluteFile() + "/chromedriver.exe");
 			driver = new ChromeDriver();
 		} else if (browserName.equals("firefox")) {
-			System.setProperty("webdriver.gecko.driver",
-					driverPath.getAbsoluteFile() + "/geckodriver.exe");
+			System.setProperty("webdriver.gecko.driver", driverPath.getAbsoluteFile() + "/geckodriver.exe");
 			driver = new FirefoxDriver();
 		} else if (browserName.equals("ie")) {
-			System.setProperty("webdriver.ie.driver",
-					driverPath.getAbsoluteFile() + "/IEDriverServers.exe");
+			System.setProperty("webdriver.ie.driver", driverPath.getAbsoluteFile() + "/IEDriverServers.exe");
 			driver = new InternetExplorerDriver();
 		}
 		driver.manage().window().maximize();
@@ -51,6 +49,26 @@ public class Base {
 		if (elementFound(element) && name != null) {
 			clearFiled(element);
 			element.sendKeys(name);
+		}
+	}
+
+	public static String getAttributeValue1(WebElement element) {
+		String name = null;
+		if (elementFound(element)) {
+			name = element.getAttribute("value");
+		}
+		return name;
+	}
+
+	public static void seletByValue(WebElement element, String name) {
+		if (elementFound(element) && name != null) {
+			new Select(element).selectByValue(name);
+		}
+	}
+
+	public static void selectByIndex(WebElement element, int index) {
+		if (elementFound(element)) {
+			new Select(element).selectByIndex(index);
 		}
 	}
 
@@ -75,8 +93,7 @@ public class Base {
 		JSONParser jsonParse = new JSONParser();
 		JSONObject jsonObject = null;
 		try {
-			jsonObject = (JSONObject) jsonParse.parse(new FileReader(jsonPath
-					.getAbsoluteFile()));
+			jsonObject = (JSONObject) jsonParse.parse(new FileReader(jsonPath.getAbsoluteFile()));
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
